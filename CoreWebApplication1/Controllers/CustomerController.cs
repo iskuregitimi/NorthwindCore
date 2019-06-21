@@ -18,10 +18,10 @@ namespace CoreWebApplication1.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Customer>> List()
+        public List<Customer> List()
         {            
             var result= _northwindContext.Customers.ToList();
-            return new ActionResult<List<Customer>>(result);
+            return result;
         }
     }
 }
