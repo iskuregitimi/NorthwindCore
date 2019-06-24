@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoreWebApplication1.DataBase
+namespace CoreWebApplication1.UI.Models
 {
-    public partial class Customer
+    public class Customer
     {
         [Key]
         [StringLength(5)]
@@ -51,6 +51,5 @@ namespace CoreWebApplication1.DataBase
         {
             return ContactName;
         }
-
     }
 }

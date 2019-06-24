@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreWebApplication1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -18,10 +18,12 @@ namespace CoreWebApplication1.Controllers
         }
 
         [HttpGet]
-        public List<Customer> List()
+        public List<Customer> ListCustomer()
         {            
             var result= _northwindContext.Customers.ToList();
             return result;
         }
+
+
     }
 }

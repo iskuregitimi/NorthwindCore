@@ -4,18 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore;
-using Swashbuckle.AspNetCore.Swagger;
 
-using Microsoft.EntityFrameworkCore;
-using CoreWebApplication1.DataBase;
-
-namespace CoreWebApplication1
+namespace CoreWebApplication1.UI
 {
     public class Startup
     {
@@ -29,17 +21,7 @@ namespace CoreWebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "TestAPI", Version = "V1" });
-            });
-
-            var connection = @"Server=.;Database=Northwind; user id=sa; password=123";
-            services.AddDbContext<NorthwindContext>
-                (options => options.UseSqlServer(connection));
-
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,16 +29,22 @@ namespace CoreWebApplication1
         {
             if (env.IsDevelopment())
             {
+                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            else
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "post API V1");
-            });
+                app.UseExceptionHandler("/Home/Error");
+            }
 
-            app.UseMvc();
+            app.UseStaticFiles();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
